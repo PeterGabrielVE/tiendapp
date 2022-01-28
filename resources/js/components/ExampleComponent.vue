@@ -33,23 +33,9 @@
                 </div>
                 <div class="form-group">
 
-                    <label>Título</label>
-                    <input v-model="title" type="text" class="form-control">
+                    <label>Nombre</label>
+                    <input v-model="name" type="text" class="form-control">
 
-                    <label>Descripción</label>
-                    <input v-model="description" type="text" class="form-control">
-
-                    <label>Precio</label>
-                    <input v-model="price" type="text" class="form-control">
-
-                    <label>Desde</label>
-                    <input v-model="since" type="date" class="form-control">
-
-                    <label>Hasta</label>
-                    <input v-model="until" type="date" class="form-control">
-
-                    <label>Popularidad</label>
-                    <input v-model="popularity" type="number" class="form-control"  min="0"  max="5">
                 </div>
                 <div class="container-buttons">
                     <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
