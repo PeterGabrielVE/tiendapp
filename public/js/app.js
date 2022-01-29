@@ -5278,9 +5278,126 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      id: 0,
+      name: "",
+      update: 0,
+      arrayBrands: [],
+      errors: []
+    };
+  },
+  methods: {
+    checkform: function checkform() {
+      this.errors = [];
+
+      if (this.name === "") {
+        this.errors.push('El Nombre es obligatorio.');
+      }
+    },
+    getBrands: function getBrands() {
+      var me = this;
+      var url = '/brands';
+      axios.get(url).then(function (response) {
+        me.arrayBrands = response.data;
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    saveBrands: function saveBrands() {
+      var me = this;
+      me.checkform();
+      var url = '/brands/store';
+      axios.post(url, {
+        'name': this.name
+      }).then(function (response) {
+        me.getBrands();
+        me.clearFields();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    updateBrands: function updateBrands() {
+      var me = this;
+      axios.put('/brands/update', {
+        'id': this.update,
+        'name': this.name
+      }).then(function (response) {
+        me.getBrands();
+        me.clearFields();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadFieldsUpdate: function loadFieldsUpdate(data) {
+      this.update = data.id;
+      var me = this;
+      var url = '/brands/search?id=' + this.update;
+      axios.get(url).then(function (response) {
+        me.name = response.data.name;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    deleteBrand: function deleteBrand(data) {
+      var me = this;
+      var brand_id = data.id;
+
+      if (confirm('¿Seguro que deseas borrar esta marca?')) {
+        axios["delete"]('/brands/delete/' + brand_id).then(function (response) {
+          me.getBrands();
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    clearFields: function clearFields() {
+      this.name = "";
+      this.update = 0;
+    }
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.getBrands();
   }
 });
 
@@ -27893,28 +28010,167 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container container-activity p-4" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("h2", [_vm._v("Lista de Marcas")]),
+        _vm._v(" "),
+        _c("table", { staticClass: "table text-center" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.arrayBrands, function (brand) {
+              return _c("tr", { key: brand.id }, [
+                _c("td", { domProps: { textContent: _vm._s(brand.name) } }),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm",
+                      attrs: { title: "Editar" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.loadFieldsUpdate(brand)
+                        },
+                      },
+                    },
+                    [_c("i", { staticClass: "fa fa-edit" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm",
+                      attrs: { title: "Borrar" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.deleteBrand(brand)
+                        },
+                      },
+                    },
+                    [_c("i", { staticClass: "fa fa-trash" })]
+                  ),
+                ]),
+              ])
+            }),
+            0
+          ),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 mt-3" }, [
+        _vm.errors.length
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _vm.errors.length
+                ? _c("p", [
+                    _c("b", [
+                      _vm._v(
+                        "Por favor, corrija el(los) siguiente(s) error(es):"
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.errors, function (error) {
+                        return _c("li", { key: error.id }, [
+                          _vm._v(_vm._s(error)),
+                        ])
+                      }),
+                      0
+                    ),
+                  ])
+                : _vm._e(),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [_vm._v("Nombre")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "container-buttons" }, [
+          _vm.update == 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: {
+                    click: function ($event) {
+                      return _vm.saveBrands()
+                    },
+                  },
+                },
+                [_vm._v("Añadir")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.update != 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-warning",
+                  on: {
+                    click: function ($event) {
+                      return _vm.updateBrands()
+                    },
+                  },
+                },
+                [_vm._v("Actualizar")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.update != 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn",
+                  on: {
+                    click: function ($event) {
+                      return _vm.clearFields()
+                    },
+                  },
+                },
+                [_vm._v("Atrás")]
+              )
+            : _vm._e(),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Text Component"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm ane example component.\n                "
-              ),
-            ]),
-          ]),
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")]),
       ]),
     ])
   },

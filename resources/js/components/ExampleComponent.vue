@@ -16,7 +16,7 @@
                                 <td>
                                     <button class="btn btn-primary btn-sm" @click="loadFieldsUpdate(brand)" title="Editar"><i class="fa fa-edit"></i></button>
 
-                                    <button class="btn btn-danger btn-sm" @click="deleteActivity(brand)" title="Borrar"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger btn-sm" @click="deleteBrand(brand)" title="Borrar"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -55,6 +55,7 @@
     export default {
         data(){
             return{
+                 id:0,
                 name:"",
                 update:0,
                 arrayBrands:[],
@@ -73,6 +74,7 @@
                 let url = '/brands'
                 axios.get(url).then(function (response) {
                     me.arrayBrands = response.data;
+                    console.log(response.data)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -123,7 +125,7 @@
                 let me =this;
                 let brand_id = data.id
                 if (confirm('¿Seguro que deseas borrar esta marca?')) {
-                    axios.delete('/actividades/borrar/'+brand_id
+                    axios.delete('/brands/delete/'+brand_id
                     ).then(function (response) {
                         me.getBrands();
                     })

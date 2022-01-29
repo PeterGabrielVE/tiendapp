@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+
+Route::get('/brands', 'App\Http\Controllers\BrandController@index');
+Route::put('/brands/update', 'App\Http\Controllers\BrandController@update');
+Route::post('/brands/store', 'App\Http\Controllers\BrandController@store');
+Route::delete('/brands/delete/{id}', 'App\Http\Controllers\BrandController@destroy');
+Route::get('/brands/search', 'App\Http\Controllers\BrandController@show');
