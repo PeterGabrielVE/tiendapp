@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,5 @@ Route::put('/brands/update', 'App\Http\Controllers\BrandController@update');
 Route::post('/brands/store', 'App\Http\Controllers\BrandController@store');
 Route::delete('/brands/delete/{id}', 'App\Http\Controllers\BrandController@destroy');
 Route::get('/brands/search', 'App\Http\Controllers\BrandController@show');
+
+Route::resource('products', ProductController::class);
