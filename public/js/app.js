@@ -5315,11 +5315,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      id: 0,
       name: "",
+      reference: "",
       update: 0,
       arrayBrands: [],
       errors: []
@@ -5331,6 +5332,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.name === "") {
         this.errors.push('El Nombre es obligatorio.');
+      }
+
+      if (this.reference === "") {
+        this.errors.push('La referencia es obligatoria.');
       }
     },
     getBrands: function getBrands() {
@@ -5348,7 +5353,8 @@ __webpack_require__.r(__webpack_exports__);
       me.checkform();
       var url = '/brands/store';
       axios.post(url, {
-        'name': this.name
+        'name': this.name,
+        'reference': this.reference
       }).then(function (response) {
         me.getBrands();
         me.clearFields();
@@ -5360,7 +5366,8 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       axios.put('/brands/update', {
         'id': this.update,
-        'name': this.name
+        'name': this.name,
+        'reference': this.reference
       }).then(function (response) {
         me.getBrands();
         me.clearFields();
@@ -5374,6 +5381,7 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/brands/search?id=' + this.update;
       axios.get(url).then(function (response) {
         me.name = response.data.name;
+        me.reference = response.data.reference;
       })["catch"](function (error) {
         // handle error
         console.log(error);
@@ -5393,6 +5401,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     clearFields: function clearFields() {
       this.name = "";
+      this.reference = "";
       this.update = 0;
     }
   },
@@ -28024,6 +28033,10 @@ var render = function () {
               return _c("tr", { key: brand.id }, [
                 _c("td", { domProps: { textContent: _vm._s(brand.name) } }),
                 _vm._v(" "),
+                _c("td", {
+                  domProps: { textContent: _vm._s(brand.reference) },
+                }),
+                _vm._v(" "),
                 _c("td", [
                   _c(
                     "button",
@@ -28111,6 +28124,32 @@ var render = function () {
           }),
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [_vm._v("Referencia")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.reference,
+                expression: "reference",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.reference },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.reference = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "container-buttons" }, [
           _vm.update == 0
             ? _c(
@@ -28169,6 +28208,8 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Referencia")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")]),
       ]),

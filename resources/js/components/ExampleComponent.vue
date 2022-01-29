@@ -7,12 +7,14 @@
                         <thead>
                             <tr>
                                 <th scope="col">Nombre</th>
+                                <th scope="col">Referencia</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="brand in arrayBrands" :key="brand.id">
                                 <td v-text="brand.name"></td>
+                                <td v-text="brand.reference"></td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" @click="loadFieldsUpdate(brand)" title="Editar"><i class="fa fa-edit"></i></button>
 
@@ -32,17 +34,16 @@
                 </p>
                 </div>
                 <div class="form-group">
-
                     <label>Nombre</label>
                     <input v-model="name" type="text" class="form-control">
-
+                </div>
+                <div class="form-group">
+                    <label>Referencia</label>
+                    <input v-model="reference" type="text" class="form-control">
                 </div>
                 <div class="container-buttons">
-                    <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
                     <button v-if="update == 0" @click="saveBrands()" class="btn btn-success">Añadir</button>
-                    <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
                     <button v-if="update != 0" @click="updateBrands()" class="btn btn-warning">Actualizar</button>
-                    <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
                     <button v-if="update != 0" @click="clearFields()" class="btn">Atrás</button>
                 </div>
             </div>
@@ -55,8 +56,8 @@
     export default {
         data(){
             return{
-                 id:0,
                 name:"",
+                reference:"",
                 update:0,
                 arrayBrands:[],
                 errors: [],
@@ -67,6 +68,9 @@
                 this.errors = [];
                  if (this.name === "") {
                      this.errors.push('El Nombre es obligatorio.');
+                }
+                if (this.reference === "") {
+                     this.errors.push('La referencia es obligatoria.');
                 }
             },
             getBrands(){
@@ -86,6 +90,7 @@
                 let url = '/brands/store'
                 axios.post(url,{
                     'name':this.name,
+                    'reference':this.reference,
                 }).then(function (response) {
                     me.getBrands();
                     me.clearFields();
@@ -100,6 +105,7 @@
                 axios.put('/brands/update',{
                     'id':this.update,
                     'name':this.name,
+                    'reference':this.reference,
                 }).then(function (response) {
                    me.getBrands()
                    me.clearFields();
@@ -114,6 +120,7 @@
                 let url = '/brands/search?id='+this.update;
                 axios.get(url).then(function (response) {
                     me.name= response.data.name;
+                    me.reference= response.data.reference;
 
                 })
                 .catch(function (error) {
@@ -136,6 +143,7 @@
             },
             clearFields(){
                 this.name = "";
+                this.reference = "";
                 this.update = 0;
             }
         },

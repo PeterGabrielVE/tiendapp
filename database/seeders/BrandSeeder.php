@@ -16,18 +16,22 @@ class BrandSeeder extends Seeder
     {
         DB::table('brands')->insert([
             'name' => 'LG',
+            'reference' => 'LG01',
         ]);
 
         DB::table('brands')->insert([
             'name' => 'Samsung',
+            'reference' => 'A02',
         ]);
 
         DB::table('brands')->insert([
             'name' => 'Xiaomi',
+            'reference' => 'Note9',
         ]);
 
         DB::table('brands')->insert([
             'name' => 'Aiwa',
+            'reference' => 'ssmarttv',
         ]);
     }
 }

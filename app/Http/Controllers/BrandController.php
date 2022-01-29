@@ -75,6 +75,7 @@ class BrandController extends Controller
         $brand = Brand::findOrFail($request->id);
 
         $brand->name = $request->name;
+        $brand->reference = $request->reference;
 
         $brand->save();
 
