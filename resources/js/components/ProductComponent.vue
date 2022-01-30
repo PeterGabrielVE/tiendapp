@@ -62,7 +62,7 @@
                     <input v-model="boarding_date" type="date" class="form-control">
 
                     <label># Inventario</label>
-                    <input v-model="quantity_inventory" type="number" class="form-control"  min="0">
+                    <input v-model="quantity_inventory" type="number" class="form-control"  min="0" @input="change" @change="change" >
 
                     <label>Observaciones</label>
                     <input v-model="observations" type="text" class="form-control">
@@ -109,6 +109,10 @@
                      this.errors.push('La cantidad de inventario es obligatorio.');
                 }
 
+                if (this.quantity_inventory >= 0 ) {
+                     this.errors.push('La cantidad de inventario tiene que ser un numero.');
+                }
+
                 if (this.name === "") {
                      this.errors.push('El nombre es obligatorio.');
                 }
@@ -121,7 +125,7 @@
                      this.errors.push('La observación es obligatorio.');
                 }
 
-                 if (this.size === "") {
+                if (this.size === "") {
                      this.errors.push('La talla es obligatorio.');
                 }
 
@@ -222,7 +226,15 @@
                 this.boarding_date = "";
                 this.quantity_inventory = "";
                 this.update = 0;
-            }
+            },
+            change(event) {
+						let val = event.target.value.trim()
+						if(/^[1-9]\d*$|^$/.test(val)) {
+							this.oldNum = val
+						} else {
+							event.target.value = this.oldNum
+						}
+					}
         },
         mounted() {
            this.getBrands();

@@ -5535,6 +5535,10 @@ __webpack_require__.r(__webpack_exports__);
         this.errors.push('La cantidad de inventario es obligatorio.');
       }
 
+      if (this.quantity_inventory >= 0) {
+        this.errors.push('La cantidad de inventario tiene que ser un numero.');
+      }
+
       if (this.name === "") {
         this.errors.push('El nombre es obligatorio.');
       }
@@ -5639,6 +5643,15 @@ __webpack_require__.r(__webpack_exports__);
       this.boarding_date = "";
       this.quantity_inventory = "";
       this.update = 0;
+    },
+    change: function change(event) {
+      var val = event.target.value.trim();
+
+      if (/^[1-9]\d*$|^$/.test(val)) {
+        this.oldNum = val;
+      } else {
+        event.target.value = this.oldNum;
+      }
     }
   },
   mounted: function mounted() {
@@ -28793,12 +28806,16 @@ var render = function () {
             attrs: { type: "number", min: "0" },
             domProps: { value: _vm.quantity_inventory },
             on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.quantity_inventory = $event.target.value
-              },
+              input: [
+                function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.quantity_inventory = $event.target.value
+                },
+                _vm.change,
+              ],
+              change: _vm.change,
             },
           }),
           _vm._v(" "),
