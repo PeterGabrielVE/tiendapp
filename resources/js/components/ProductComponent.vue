@@ -53,7 +53,10 @@
                     <input v-model="name" type="text" class="form-control">
 
                     <label>Tamaño</label>
-                    <input v-model="size" type="text" class="form-control">
+                     <select class='form-control' v-model='size'>
+                            <option value='0' >Seleccione Tamaño</option>
+                            <option v-for='data in arraySizes' :value='data' :key='data'>{{ data }}</option>
+                    </select>
 
                     <label>Fecha de Embarcación</label>
                     <input v-model="boarding_date" type="date" class="form-control">
@@ -92,6 +95,7 @@
                 arrayProducts:[],
                 errors: [],
                 brands: [],
+                arraySizes:['L','M','S'],
             }
         },
         methods:{

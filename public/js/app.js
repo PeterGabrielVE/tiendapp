@@ -5502,6 +5502,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5516,7 +5519,8 @@ __webpack_require__.r(__webpack_exports__);
       update: 0,
       arrayProducts: [],
       errors: [],
-      brands: []
+      brands: [],
+      arraySizes: ['L', 'M', 'S']
     };
   },
   methods: {
@@ -28708,27 +28712,47 @@ var render = function () {
           _vm._v(" "),
           _c("label", [_vm._v("Tamaño")]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.size,
-                expression: "size",
-              },
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.size },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.size = $event.target.value
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.size,
+                  expression: "size",
+                },
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function ($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function (o) {
+                      return o.selected
+                    })
+                    .map(function (o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.size = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
               },
             },
-          }),
+            [
+              _c("option", { attrs: { value: "0" } }, [
+                _vm._v("Seleccione Tamaño"),
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.arraySizes, function (data) {
+                return _c("option", { key: data, domProps: { value: data } }, [
+                  _vm._v(_vm._s(data)),
+                ])
+              }),
+            ],
+            2
+          ),
           _vm._v(" "),
           _c("label", [_vm._v("Fecha de Embarcación")]),
           _vm._v(" "),
