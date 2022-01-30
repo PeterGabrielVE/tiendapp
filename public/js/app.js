@@ -5535,7 +5535,7 @@ __webpack_require__.r(__webpack_exports__);
         this.errors.push('La cantidad de inventario es obligatorio.');
       }
 
-      if (this.quantity_inventory >= 0) {
+      if (this.quantity_inventory < 0) {
         this.errors.push('La cantidad de inventario tiene que ser un numero.');
       }
 

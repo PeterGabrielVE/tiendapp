@@ -15,8 +15,15 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $Brand = Brand::orderByDesc('id')->get();
-        return $Brand;
+        try {
+            $Brand = Brand::orderByDesc('id')->get();
+            return $Brand;
+
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     /**
@@ -37,7 +44,13 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $Brand = Brand::create($request->all());
+        try {
+            $Brand = Brand::create($request->all());
+
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
 
     }
 
@@ -49,8 +62,15 @@ class BrandController extends Controller
      */
     public function show(Request $request)
     {
-        $Brand = Brand::findOrFail($request->id);
-        return $Brand;
+        try {
+            $Brand = Brand::findOrFail($request->id);
+            return $Brand;
+
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     /**
@@ -73,14 +93,20 @@ class BrandController extends Controller
      */
     public function update(Request $request)
     {
-        $brand = Brand::findOrFail($request->id);
+        try {
+            $brand = Brand::findOrFail($request->id);
 
-        $brand->name = $request->name;
-        $brand->reference = $request->reference;
+            $brand->name = $request->name;
+            $brand->reference = $request->reference;
 
-        $brand->save();
+            $brand->save();
 
-        return $brand;
+            return $brand;
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     /**
@@ -91,18 +117,24 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::where('id_brand',$id)
+        try {
+            $product = Product::where('id_brand',$id)
                         ->get();
-        if(count($product) > 0){
-            $returnData = array(
-                'status' => 'error',
-                'message' => 'Hay productos con esta marca!'
-            );
-            return response()->json($returnData,500);
-        }else{
-            $brand = Brand::destroy($id);
-            return $brand;
+            if(count($product) > 0){
+                $returnData = array(
+                    'status' => 'error',
+                    'message' => 'Hay productos con esta marca!'
+                );
+                return response()->json($returnData,500);
+            }else{
+                $brand = Brand::destroy($id);
+                return $brand;
+            }
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
         }
+
 
     }
 }

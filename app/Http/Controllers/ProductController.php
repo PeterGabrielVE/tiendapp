@@ -7,39 +7,72 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::select('products.*', 'brands.name as brand')
-        ->leftjoin('brands', 'products.id_brand', '=', 'brands.id')
-        ->orderByDesc('boarding_date')->get();
-        return $products;
+        try {
+            $products = Product::select('products.*', 'brands.name as brand')
+            ->leftjoin('brands', 'products.id_brand', '=', 'brands.id')
+            ->orderByDesc('boarding_date')->get();
+            return $products;
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
-        $product->save();
+        try {
+            $product = Product::create($request->all());
+            $product->save();
+            return response()->json('Producto creado!');
 
-        return response()->json('Producto creado!');
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     public function show($id)
     {
-        $product = Product::find($id);
-        return response()->json($product);
+        try {
+            $product = Product::find($id);
+            return response()->json($product);
+
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     public function update(Request $request)
     {
-        $product = Product::find($request->id);
-        $product->update($request->all());
+        try {
+            $product = Product::find($request->id);
+            $product->update($request->all());
 
-        return response()->json('Producto actualizado!');
+            return response()->json('Producto actualizado!');
+
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     public function destroy($id)
     {
-        $product = Product::find($id);
-        $product->delete();
+        try {
+            $product = Product::find($id);
+            $product->delete();
 
-        return response()->json('Producto eliminado!');
+            return response()->json('Producto eliminado!');
+
+        }catch(\App\Exceptions\NotFoundmonException $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 }
