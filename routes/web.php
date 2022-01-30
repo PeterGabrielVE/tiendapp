@@ -25,4 +25,8 @@ Route::post('/brands/store', 'App\Http\Controllers\BrandController@store');
 Route::delete('/brands/delete/{id}', 'App\Http\Controllers\BrandController@destroy');
 Route::get('/brands/search', 'App\Http\Controllers\BrandController@show');
 
-Route::resource('products', ProductController::class);
+Route::get('/products', 'App\Http\Controllers\ProductController@index');
+Route::post('/products/guardar', 'App\Http\Controllers\ProductController@store');
+Route::put('/products/actualizar', 'App\Http\Controllers\ProductController@update');
+Route::delete('/products/borrar/{id}', 'App\Http\Controllers\ProductController@destroy');
+Route::get('/products/search/{id}', 'App\Http\Controllers\ProductController@show');

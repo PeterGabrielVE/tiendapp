@@ -7,8 +7,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all()->toArray();
-        return array_reverse($products);
+        $products = Product::select('products.*', 'brands.name as brand')
+        ->leftjoin('brands', 'products.id_brand', '=', 'brands.id')
+        ->orderByDesc('boarding_date')->get();
+        return $products;
     }
 
     public function store(Request $request)
@@ -25,9 +27,9 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request)
     {
-        $product = Product::find($id);
+        $product = Product::find($request->id);
         $product->update($request->all());
 
         return response()->json('Producto actualizado!');

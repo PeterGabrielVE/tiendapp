@@ -137,6 +137,7 @@
                         me.getBrands();
                     })
                     .catch(function (error) {
+                        alert('Hay productos con esta marca!');
                         console.log(error);
                     });
                 }

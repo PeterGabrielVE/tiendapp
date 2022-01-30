@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -90,7 +91,18 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $brand = Brand::destroy($id);
-        return $brand;
+        $product = Product::where('id_brand',$id)
+                        ->get();
+        if(count($product) > 0){
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'Hay productos con esta marca!'
+            );
+            return response()->json($returnData,500);
+        }else{
+            $brand = Brand::destroy($id);
+            return $brand;
+        }
+
     }
 }

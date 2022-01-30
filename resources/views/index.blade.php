@@ -11,7 +11,8 @@
     </head>
     <body>
             <div id="app" class="content">
-                <example-component></example-component><!--Añadimos nuestro componente vuejs-->
+                <example-component></example-component>
+                <product-component></product-component>
             </div>
         <script src="{{ mix('/js/app.js') }}"></script>
     </body>
