@@ -5358,6 +5358,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         me.getBrands();
         me.clearFields();
+        location.reload();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -5371,6 +5372,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         me.getBrands();
         me.clearFields();
+        location.reload();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -5394,6 +5396,7 @@ __webpack_require__.r(__webpack_exports__);
       if (confirm('¿Seguro que deseas borrar esta marca?')) {
         axios["delete"]('/brands/delete/' + brand_id).then(function (response) {
           me.getBrands();
+          location.reload();
         })["catch"](function (error) {
           alert('Hay productos con esta marca!');
           console.log(error);
